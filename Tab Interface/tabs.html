@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แกลเลอรี & To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+        .tab-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            background: #007bff;
+            color: white;
+        }
+        .tab-btn.active {
+            background: #0056b3;
+        }
+        .tab-content {
+            border-top: 2px solid #ddd;
+            padding-top: 10px;
+        }
+        .tab-pane {
+            display: none;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+        
+        .gallery {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .main-image img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .thumbnails {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .thumbnails img {
+            width: 80px;
+            height: 60px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+        .thumbnails img:hover {
+            transform: scale(1.1);
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .todo-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+        .todo-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f1f1f1;
+            padding: 8px;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+
+<div class="tab-container">
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="tab1">แกลเลอรี</button>
+        <button class="tab-btn" data-tab="tab2">To-Do List</button>
+    </div>
+  
+    <div class="tab-content">
+        
+        <div id="tab1" class="tab-pane active">
+            <h2>แกลเลอรีรูปภาพ</h2>
+            <div class="gallery">
+                <div class="main-image">
+                    <img id="mainImg" src="5.jpg" alt="Main Image">
+                </div>
+                <div class="thumbnails">
+                    <img src="1.jpg" onclick="changeImage('1.jpg')">
+                    <img src="2.jpg" onclick="changeImage('2.jpg')">
+                    <img src="3.jpg" onclick="changeImage('3.jpg')">
+                    <img src="4.jpg" onclick="changeImage('4.jpg')">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tab 2: To-Do List -->
+        <div id="tab2" class="tab-pane">
+            <h2>To-Do List</h2>
+            <div class="container">
+                <div class="input-section">
+                    <input type="text" id="todo-input" placeholder="เพิ่มรายการใหม่...">
+                    <button onclick="addTodo()">เพิ่ม</button>
+                </div>
+                <ul class="todo-list" id="todo-list"></ul>
+                <button onclick="clearCompleted()">ลบรายการที่เสร็จแล้ว</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ฟังก์ชันเปลี่ยนรูปภาพ
+    function changeImage(imageSrc) {
+        document.getElementById("mainImg").src = imageSrc;
+    }
+
+    // ฟังก์ชันเปลี่ยนแท็บ
+    document.querySelectorAll(".tab-btn").forEach(button => {
+        button.addEventListener("click", function() {
+            document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+            document.querySelectorAll(".tab-pane").forEach(pane => pane.classList.remove("active"));
+
+            this.classList.add("active");
+            document.getElementById(this.dataset.tab).classList.add("active");
+        });
+    });
+
+    // ฟังก์ชันเพิ่มรายการ To-Do List
+    function addTodo() {
+        let input = document.getElementById("todo-input");
+        let text = input.value.trim();
+        if (text === "") return;
+
+        let list = document.getElementById("todo-list");
+        let li = document.createElement("li");
+        li.classList.add("todo-item");
+
+        li.innerHTML = `
+            <span>${text}</span>
+            <div>
+                <button onclick="toggleComplete(this)">✔️</button>
+                <button onclick="deleteTodo(this)">🗑️</button>
+            </div>
+        `;
+
+        list.appendChild(li);
+        input.value = "";
+    }
+
+    // ฟังก์ชันทำเครื่องหมายรายการที่เสร็จแล้ว
+    function toggleComplete(button) {
+        let li = button.parentElement.parentElement;
+        li.classList.toggle("completed");
+    }
+
+    // ฟังก์ชันลบรายการ To-Do List
+    function deleteTodo(button) {
+        let li = button.parentElement.parentElement;
+        li.remove();
+    }
+
+    // ฟังก์ชันลบรายการที่เสร็จแล้วทั้งหมด
+    function clearCompleted() {
+        let items = document.querySelectorAll(".completed");
+        items.forEach(item => item.remove());
+    }
+</script>
+
+</body>
+</html>

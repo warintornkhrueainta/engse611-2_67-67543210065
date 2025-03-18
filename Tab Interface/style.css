@@ -1,0 +1,35 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .tabs {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .tab-btn {
+    padding: 10px 20px;
+    background-color: #f1f1f1;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+    border-radius: 5px 5px 0 0;
+  }
+  
+  .tab-btn.active {
+    background-color: #ddd;
+  }
+  
+  .tab-pane {
+    display: none;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-top: none;
+  }
+  
+  .tab-pane.active {
+    display: block;
+  }
