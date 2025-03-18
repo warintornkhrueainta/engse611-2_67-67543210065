@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Event Handling</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .gallery {
+            text-align: center;
+        }
+        .main-image {
+            width: 400px;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .thumbnails img {
+            width: 100px;
+            height: auto;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body> 
+    <div class="gallery">
+        <img id="mainImage" class="main-image" src="9.jpg" alt="Main Image">
+        <div class="thumbnails">
+            <img src="8.jpg" alt="Thumbnail 1" onclick="changeImage('image1.jpg')">
+            <img src="7.jpg" alt="Thumbnail 2" onclick="changeImage('image2.jpg')">
+            <img src="6.jpg" alt="Thumbnail 3" onclick="changeImage('image3.jpg')">
+            <img src="5.jpg" alt="Thumbnail 4" onclick="changeImage('image4.jpg')">
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        function changeImage(imageSrc) {
+            document.getElementById('mainImage').src = imageSrc;
+        }
+    </script>
+</body>
+</html>
